@@ -18,7 +18,7 @@ function CoinPage() {
         setCoin(response.data);
       }
     );
-  }, []);
+  });
 
   // if statement to check if data has reached, only then render the component
   if (coin) {
