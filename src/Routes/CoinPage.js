@@ -1,12 +1,14 @@
 import React from "react";
 import Axios from "axios";
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
-import "../Routes/Styles/CoinPage.css";
-import BackgroundImg from "../Images/cryptobckg.jpeg";
-
-function CoinPage() {
-  let { id } = useParams();
+import { Link } from "react-router-dom";
+import styles from "./Styles/CoinPage.module.css";
+import { green, red } from "../Components/Colors";
+// import BackgroundImg from "../Images/cryptobckg.jpeg";
+// https://dribbble.com/shots/19916839-Crypto-Wallet-App
+// https://www.npmjs.com/package/@babel/plugin-proposal-private-property-in-object
+function CoinPage({ id,backBtn }) {
+  // let { id } = useParams();
   const [coin, setCoin] = useState(null);
   // coin start has to be null first to give time to fetch API data
 
@@ -18,61 +20,66 @@ function CoinPage() {
         setCoin(response.data);
       }
     );
-  });
+  }, [id]);
 
   // if statement to check if data has reached, only then render the component
   if (coin) {
     return (
-      <div
-        className="coinPage-Container"
+      <>
+        {/* <div
+        className={styles.coinPage_Container}
         style={{
           backgroundImage: `url(${BackgroundImg})`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
         }}
-      >
-        <div className="coinPage-Info">
+      > */}
+        <div className={styles.coinPage_Info}>
+          <img
+            src={coin.image.large}
+            alt="Icon"
+            className={styles.coinPage_Icon}
+          />
           <h1>{coin.name}</h1>
-          <img src={coin.image.large} alt="Icon" className="coinPage-Icon" />
-          <div className="coinPage-Data">
-            <div className="coinPage-Row">
-              <h3 className="coinPage-RowHeader">Symbol:</h3>
-              <h3 className="coinPage-RowData">{coin.symbol}</h3>
+          <div className={styles.coinPage_Data}>
+            <div className={styles.coinPage_Row}>
+              <h3 className={styles.coinPage_RowHeader}>Symbol:</h3>
+              <h3 className={styles.coinPage_RowData}>{coin.symbol}</h3>
             </div>
-            <div className="coinPage-Row">
-              <h3 className="coinPage-RowHeader">Current Price:</h3>
-              <h3 className="coinPage-RowData">
+            <div className={styles.coinPage_Row}>
+              <h3 className={styles.coinPage_RowHeader}>Current Price:</h3>
+              <h3 className={styles.coinPage_RowData}>
                 $ {coin.market_data.current_price.usd.toLocaleString()}
               </h3>
             </div>
-            <div className="coinPage-Row">
-              <h3 className="coinPage-RowHeader">Market Cap:</h3>
-              <h3 className="coinPage-RowData">
+            <div className={styles.coinPage_Row}>
+              <h3 className={styles.coinPage_RowHeader}>Market Cap:</h3>
+              <h3 className={styles.coinPage_RowData}>
                 $ {coin.market_data.market_cap.usd.toLocaleString()}
               </h3>
             </div>
-            <div className="coinPage-Row">
-              <h3 className="coinPage-RowHeader">Total Volume:</h3>
-              <h3 className="coinPage-RowData">
+            <div className={styles.coinPage_Row}>
+              <h3 className={styles.coinPage_RowHeader}>Total Volume:</h3>
+              <h3 className={styles.coinPage_RowData}>
                 $ {coin.market_data.total_volume.usd.toLocaleString()}
               </h3>
             </div>
-            <div className="coinPage-Row">
-              <h3 className="coinPage-RowHeader">24hr High:</h3>
-              <h3 className="coinPage-RowData green">
+            <div className={styles.coinPage_Row}>
+              <h3 className={styles.coinPage_RowHeader}>24hr High:</h3>
+              <h3 style={{ color: green }} className={styles.coinPage_RowData}>
                 $ {coin.market_data.high_24h.usd.toLocaleString()}
               </h3>
             </div>
-            <div className="coinPage-Row">
-              <h3 className="coinPage-RowHeader">24hr Low:</h3>
-              <h3 className="coinPage-RowData red">
+            <div className={styles.coinPage_Row}>
+              <h3 className={styles.coinPage_RowHeader}>24hr Low:</h3>
+              <h3 style={{ color: red }} className={styles.coinPage_RowData}>
                 $ {coin.market_data.low_24h.usd.toLocaleString()}
               </h3>
             </div>
           </div>
-          <Link to="/">
-            <div className="coinPage-RouteButton">Go back</div>
-          </Link>
+          {backBtn && <Link to="/">
+            <div className={styles.coinPage_RouteButton}>Go back</div>
+          </Link>}
 
           {/* coinName={coins.name}
               coinSymbol={coins.symbol}
@@ -80,7 +87,8 @@ function CoinPage() {
               marketCap={coins.market_cap}
               priceChange={ */}
         </div>
-      </div>
+        {/* </div> */}
+      </>
     );
   } else {
     return null; // if API data not fetched, return null

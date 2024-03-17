@@ -1,6 +1,9 @@
 import React from "react";
 import "../Components/Coin.css";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
+import ButtonComp from "./ButtonComp/ButtonComp";
+import { MdArrowForwardIos } from "react-icons/md";
+import { green, red } from "./Colors";
 
 const Coin = ({
   icon,
@@ -10,33 +13,35 @@ const Coin = ({
   marketCap,
   priceChange,
   id,
+  setId,
 }) => {
-  let history = useNavigate();
+  // let history = useNavigate();
   return (
-    <div className="coinContainer">
-      <div className="coinRow">
-        <div className="coinData">
-          <div className="coin">
-            <img src={icon} alt={`${coinName} icon`} />
-            <h1 className="coinName">{coinName}</h1>
-            <p className="coinSymbol">{coinSymbol}</p>
-            <p className="coinPrice">$ {price.toFixed(2)}</p>
-            {priceChange < 0 ? (
-              <p className="priceChange red">{priceChange.toFixed(2)}%</p>
-            ) : (
-              <p className="priceChange green">{priceChange.toFixed(2)}%</p>
-            )}
-            <p className="coinVolume">$ {marketCap.toLocaleString()}</p>
-            <button
-              onClick={() => {
-                history(`/CoinPage/${id}`);
-              }}
-            >
-              More Info
-            </button>
-          </div>
-        </div>
+    <div className="coinCard">
+      <img src={icon} alt={`${coinName} icon`} />
+      <p className="coinSymbol">{coinSymbol}</p>
+      <p
+        style={{ color: priceChange < 0 ? red : green }}
+        className="priceChange"
+      >
+        {priceChange.toFixed(2)}%
+      </p>
+      <p className="coinVolume">${marketCap.toLocaleString()}</p>
+      <div className="name_price_cont">
+        <p className="coinPrice">${price.toFixed(2)}</p>
+        <h1 className="coinName">{coinName}</h1>
       </div>
+      <ButtonComp
+        className="moreButton"
+        otherProps={{
+          onClick: () => {
+            setId(id);
+            // history(`/CoinPage/${id}`);
+          },
+        }}
+      >
+        More Info <MdArrowForwardIos className="arrowIcon" />
+      </ButtonComp>
     </div>
   );
 };
