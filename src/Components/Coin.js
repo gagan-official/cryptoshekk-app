@@ -19,10 +19,10 @@ const Coin = ({
   // let history = useNavigate();
   return (
     <div className={`coinCard ${id===letId? "active" : ""}`}>
-      <img src={icon} alt={`${coinName} icon`} />
+      <img style={{ filter: id===letId && "none" }} src={icon} alt={`${coinName} icon`} />
       <p className="coinSymbol">{coinSymbol}</p>
       <p
-        style={{ color: priceChange < 0 ? red : green }}
+        style={{ color: id!==letId && (priceChange < 0 ? red : green) }}
         className="priceChange"
       >
         {priceChange.toFixed(2)}%
