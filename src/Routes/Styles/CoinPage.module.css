@@ -25,6 +25,7 @@
   padding: 2rem;
   width: 30%;
   max-width: 500px;
+  overflow: hidden;
 }
 
 .coinPage_Info h1 {
@@ -32,6 +33,7 @@
   letter-spacing: 2px;
   font-weight: 600;
   margin: 1rem 0;
+  text-align: center;
 }
 
 .coinPage_Icon {

@@ -4,23 +4,33 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Styles/CoinPage.module.css";
 import { green, red } from "../Components/Colors";
+import IOSLoader from "../Components/IOSLoader/IOSLoader";
 // import BackgroundImg from "../Images/cryptobckg.jpeg";
 // https://dribbble.com/shots/19916839-Crypto-Wallet-App
 // https://www.npmjs.com/package/@babel/plugin-proposal-private-property-in-object
 function CoinPage({ id,backBtn }) {
   // let { id } = useParams();
   const [coin, setCoin] = useState(null);
+  const [loading, setLoading] = useState(false);
   // coin start has to be null first to give time to fetch API data
 
   useEffect(() => {
-    console.log(id);
-    Axios.get(`https://api.coingecko.com/api/v3/coins/${id}`).then(
-      (response) => {
-        console.log(response.data);
-        setCoin(response.data);
-      }
-    );
+    setLoading(true);
+    const getCoinData = () => {
+      console.log(id);
+      Axios.get(`https://api.coingecko.com/api/v3/coins/${id}`).then(
+        (response) => {
+          console.log(response.data);
+          setLoading(false);
+          setCoin(response.data);
+        }
+      ).catch(err => {
+        console.error(err);
+      });
+    }
+    getCoinData();
   }, [id]);
+
 
   // if statement to check if data has reached, only then render the component
   if (coin) {
@@ -35,6 +45,7 @@ function CoinPage({ id,backBtn }) {
         }}
       > */}
         <div className={styles.coinPage_Info}>
+          {loading && <IOSLoader/>}
           <img
             src={coin.image.large}
             alt="Icon"

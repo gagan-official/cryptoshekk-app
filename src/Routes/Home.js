@@ -39,14 +39,13 @@ function Home() {
         setCoins(response.data);
       })
       .catch((error) => {
-        console.warn("error aya h mc", error);
-        console.log("dekh", error.code);
         // if(error.code==="ERR_NETWORK") {
-        if (error) {
-          setIsLoading(false);
-          setCoins(dummyData);
-          setNetError(true);
-        }
+        // if (error) {
+        // }
+        console.error(error);
+        setIsLoading(false);
+        setCoins(dummyData);
+        setNetError(true);
       });
   };
 
@@ -95,6 +94,7 @@ function Home() {
             return (
               <Fragment key={index}>
                 <Coin
+                  letId={letId}
                   setId={setId}
                   id={coins.id}
                   icon={coins.image}

@@ -13,11 +13,12 @@ const Coin = ({
   marketCap,
   priceChange,
   id,
+  letId,
   setId,
 }) => {
   // let history = useNavigate();
   return (
-    <div className="coinCard">
+    <div className={`coinCard ${id===letId? "active" : ""}`}>
       <img src={icon} alt={`${coinName} icon`} />
       <p className="coinSymbol">{coinSymbol}</p>
       <p

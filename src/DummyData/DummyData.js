@@ -27,9 +27,9 @@ export const dummyData = [
         price_change_percentage_24h: -5.16
     },
     {
-        id: "etherium",
+        id: "ethereum",
         image: "Images/bitcoinLogo.png",
-        name: "Etherium",
+        name: "Ethereum",
         symbol: "ETH",
         current_price: 68014,
         market_cap: 139938399,
