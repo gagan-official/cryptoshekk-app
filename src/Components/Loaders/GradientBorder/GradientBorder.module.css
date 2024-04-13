@@ -1,0 +1,119 @@
+:root {
+  --BgColor: #0e0d0dc7;
+  --seconds: .5s;
+  --additionalHeight: 1rem;
+}
+/* * {
+  box-sizing: border-box;
+}
+body {
+  min-height: 100vh;
+  background: var(--bg);
+  display: grid;
+  place-items: center;
+} */
+@property --a {
+  initial-value: 0deg;
+  inherits: false;
+  syntax: '<angle>';
+}
+@property --h {
+  initial-value: 0;
+  inherits: false;
+  syntax: '<number>';
+}
+.loaderAbsoluteCont {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: calc(100% + var(--additionalHeight));
+  margin-top: calc(var(--additionalHeight) * -1);
+  backdrop-filter: blur(5px);
+  z-index: 2;
+  background-color: var(--BgColor);
+}
+.loaderAbsoluteCont.fadeInClass {
+  animation: fadeIn var(--seconds) ease-in-out;
+}
+.loaderAbsoluteCont.fadeOutClass {
+  opacity: 0;
+  visibility: hidden;
+  transition: var(--seconds);
+  transition-property: opacity, visibility;
+  /* animation: fadeOut var(--seconds) ease-in-out; */
+}
+.loaderAbsoluteCont+* div,
+.loaderAbsoluteCont+*+*{
+  scale: .95;
+  transition: var(--seconds) ease-in-out;
+  transition-property: scale;
+  /* filter: blur(5px); */
+}
+.loaderAbsoluteCont.fadeOutClass+* div,
+.loaderAbsoluteCont.fadeOutClass+*+*{
+  scale: 1;
+}
+/* .loaderCont {
+  background: linear-gradient(#0000, #0e0d0da5 30% 70%, #0000);
+} */
+.loader {
+  position: sticky;
+  top: 25%;
+  margin: 15vh 0;
+  height: fit-content;
+  padding: 2rem 4rem;
+  font-family: monospace;
+  font-weight: bold;
+  color: #fff;
+  border-style: solid;
+  border-width: 1vmin;
+  font-size: 2rem;
+  --charge: hsl(var(--h, 0), 80%, 50%);
+  -o-border-image: conic-gradient(var(--charge) var(--a), transparent calc(var(--a) + 0.5deg)) 30;
+     border-image: conic-gradient(var(--charge) var(--a), transparent calc(var(--a) + 0.5deg)) 30;
+  -webkit-animation: load 2s infinite ease-in-out alternate;
+          animation: load 2s infinite ease-in-out alternate;
+}
+@-webkit-keyframes load {
+  0%, 10% {
+    --a: 0deg;
+    --h: 0;
+  }
+  100% {
+    --a: 360deg;
+    --h: 100;
+  }
+}
+@keyframes load {
+  0%, 10% {
+    --a: 0deg;
+    --h: 0;
+  }
+  100% {
+    --a: 360deg;
+    --h: 100;
+  }
+}
+@keyframes fadeIn {
+  from {
+    visibility: hidden;
+    opacity: 0;
+  }
+  to {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+@keyframes fadeOut {
+  from {
+    visibility: visible;
+    opacity: 1;
+  }
+  to {
+    visibility: hidden;
+    opacity: 0;
+  }
+}

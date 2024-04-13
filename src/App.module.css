@@ -78,12 +78,34 @@
 } */
 /* ############### Input and Button Container Ends ############### */
 
+/* ############### Network Error Message Heading Styling ############### */
+.netErrorHeading {
+  color: red;
+  text-align: center;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  animation: appear .7s ease-in-out;
+}
+
+@keyframes appear {
+  from {
+    margin-bottom: 0;
+    line-height: 0px;
+  }
+  to {
+    margin-bottom: 1rem;
+    line-height: 1.5rem;
+  }
+}
+
+/* ############### Cryptos List Container and Children Stylings ############### */
 .topContainer {
   display: flex;
   gap: 1rem;
   width: 100%;
   justify-content: center;
   padding: 0 1rem;
+  position: relative;
 }
 
 .loadingMssg {

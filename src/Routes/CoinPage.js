@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Styles/CoinPage.module.css";
 import { green, red } from "../Components/Colors";
-import IOSLoader from "../Components/IOSLoader/IOSLoader";
+import IOSLoader from "../Components/Loaders/IOSLoader/IOSLoader";
+import { dummyCoinData } from "../DummyData/DummyData";
 // import BackgroundImg from "../Images/cryptobckg.jpeg";
 // https://dribbble.com/shots/19916839-Crypto-Wallet-App
 // https://www.npmjs.com/package/@babel/plugin-proposal-private-property-in-object
@@ -24,8 +25,10 @@ function CoinPage({ id,backBtn }) {
           setLoading(false);
           setCoin(response.data);
         }
-      ).catch(err => {
-        console.error(err);
+        ).catch(err => {
+          console.error(err);
+          setLoading(false);
+          setCoin(dummyCoinData[id]);
       });
     }
     getCoinData();

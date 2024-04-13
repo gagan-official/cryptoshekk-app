@@ -6,11 +6,12 @@ import { MdRefresh, MdSearch } from "react-icons/md";
 import { dummyData } from "../DummyData/DummyData";
 import ButtonComp from "../Components/ButtonComp/ButtonComp";
 import CoinPage from "./CoinPage";
+import GradientBorder from "../Components/Loaders/GradientBorder/GradientBorder";
 
 function Home() {
   const [coins, setCoins] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState("false");
   const [netError, setNetError] = useState(false);
   const [letId, setId] = useState("bitcoin");
 
@@ -27,14 +28,18 @@ function Home() {
   };
 
   const refreshPage = () => {
-    setIsLoading(true);
+    setIsLoading("true");
     Axios.get(
       // `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&x_cg_demo_api_key=${process.env.REACT_APP_COINGECKO_API_KEY}`
       "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false"
     )
       .then((response) => {
         console.log(response.data);
-        setIsLoading(false);
+        // setIsLoading(false);
+        setIsLoading("animate");
+        setTimeout(() => {
+          setIsLoading("false");
+        }, 500);
         setNetError(false);
         setCoins(response.data);
       })
@@ -43,7 +48,10 @@ function Home() {
         // if (error) {
         // }
         console.error(error);
-        setIsLoading(false);
+        setIsLoading("animate");
+        setTimeout(() => {
+          setIsLoading("false");
+        }, 500);
         setCoins(dummyData);
         setNetError(true);
       });
@@ -82,15 +90,17 @@ function Home() {
           </ButtonComp>
         </div>
       </div>
-      {isLoading && <h1 className={styles.loadingMssg}>Data Loading...</h1>}
+      {/* {isLoading && <h1 className={styles.loadingMssg}>Data Loading...</h1>} */}
       {netError && (
-        <h3 style={{ color: "red", textAlign: "center", marginBottom: "1rem" }}>
+        <h3 className={styles.netErrorHeading}>
           There was a network issue, rendering dummy data for now:
         </h3>
       )}
       <div className={styles.topContainer}>
+        {isLoading === "false" ? null : <GradientBorder loading={isLoading} />}
+        {/* <GradientBorder loading={true} /> */}
         <div className={styles.coinsContainer}>
-          {filterCoins.map((coins,index) => {
+          {filterCoins.map((coins, index) => {
             return (
               <Fragment key={index}>
                 <Coin
@@ -108,7 +118,7 @@ function Home() {
             );
           })}
         </div>
-        <CoinPage id={letId}/>
+        <CoinPage id={letId} />
       </div>
     </>
   );
